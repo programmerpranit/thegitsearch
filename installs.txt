@@ -1,0 +1,3 @@
+yarn add -D @typescript-eslint/eslint-plugin eslint-config-prettier eslint-config-standard-with-typescript eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-react prettier prettier-plugin-tailwindcss
+
+yarn add axios crypto-js jose jsonwebtoken zod mongoose nextjs-progressbar react-toastify @tanstack/react-query @tanstack/react-query-devtools
