@@ -13,7 +13,7 @@ const GithubPage = async ({
   return (
     <>
       <LoginUtil token={token} />
-      <div>GithubPage {searchParams.code}</div>
+      <div>Redirecting ...</div>
     </>
   );
 };
