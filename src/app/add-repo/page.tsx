@@ -5,7 +5,7 @@ import type { Repo } from "@/types/github";
 
 const AddRepo = async (): Promise<JSX.Element> => {
   const getUserRepos = async (): Promise<Repo[]> => {
-    return [];
+    // return [];
     const username = getUsername();
     console.log(username);
     const data = await fetch(`https://api.github.com/users/${username}/repos`, {

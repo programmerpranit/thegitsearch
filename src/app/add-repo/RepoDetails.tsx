@@ -4,6 +4,7 @@ import type { PackageJSON } from "@/types/node";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { addRepo } from "./actions";
 
 const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   const [dependencies, setDependencies] = useState<string[]>([]);
@@ -12,6 +13,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   );
   const [topics, setTopics] = useState<string[]>(details?.topics ?? []);
   const [topic, setTopic] = useState<string>("");
+  const [framework, setFramework] = useState("Unknown");
 
   const getUserNameRepo = (url: string): { user: string; repo: string } => {
     const splitted = url.split("/");
@@ -33,7 +35,21 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
     }
   };
 
-  const addRepo = async (): Promise<void> => {};
+  const addRepoWrapper = async (): Promise<void> => {
+    const repo = await addRepo(
+      details?.full_name ?? "",
+      details?.language ?? "",
+      framework,
+      description,
+      topics,
+      dependencies
+    );
+    if (repo === null) {
+      toast.error("Failed to add the repo");
+    } else {
+      toast.success("Repo Added Successfully");
+    }
+  };
 
   useEffect(() => {
     if (details === null) return;
@@ -63,7 +79,13 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
 
       <div className={` my-3 flex flex-col`}>
         <label className="font-medium">Detected Framework</label>
-        <select className="max-w-xl rounded border px-3 py-2 outline-none">
+        <select
+          value={framework}
+          onChange={(e) => {
+            setFramework(e.target.value);
+          }}
+          className="max-w-xl rounded border px-3 py-2 outline-none"
+        >
           <option value="Unknown">Unknown</option>
           <option value="React">React</option>
           <option value="NextJS">NextJS</option>
@@ -116,7 +138,12 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
         ))}
       </div>
 
-      <button onClick={addRepo} className="mt-5 bg-primary">
+      <button
+        onClick={() => {
+          void addRepoWrapper();
+        }}
+        className="mt-5 bg-primary"
+      >
         Add Repo
       </button>
     </div>
