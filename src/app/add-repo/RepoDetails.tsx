@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { addRepo } from "./actions";
+import { useRouter } from 'next/navigation'
 
 const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   const [dependencies, setDependencies] = useState<string[]>([]);
@@ -14,6 +15,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   const [topics, setTopics] = useState<string[]>(details?.topics ?? []);
   const [topic, setTopic] = useState<string>("");
   const [framework, setFramework] = useState("Unknown");
+  const router = useRouter()
 
   const getUserNameRepo = (url: string): { user: string; repo: string } => {
     const splitted = url.split("/");
@@ -47,6 +49,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
     if (repo === null) {
       toast.error("Failed to add the repo");
     } else {
+      router.push('/')
       toast.success("Repo Added Successfully");
     }
   };
