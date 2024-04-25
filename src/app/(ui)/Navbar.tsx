@@ -1,5 +1,6 @@
 "use client";
 
+import { getMyProfile } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ const Navbar = (): JSX.Element => {
     setPathname(path);
     const t = localStorage.getItem("token");
     setToken(t);
+    // getMyProfile();
   }, [path]);
 
   if (path.startsWith("/admin")) return <></>;

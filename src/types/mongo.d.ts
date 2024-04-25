@@ -1,4 +1,5 @@
 import type { IRepo } from "@/models/Repo";
+import type { IUser } from "@/models/User";
 import type { JwtPayload } from "jsonwebtoken";
 
 interface MongoBase {
@@ -16,3 +17,5 @@ interface IPayload extends JwtPayload {
 }
 
 interface RepoType extends IRepo, MongoBase {}
+
+interface UserType extends IUser, MongoBase {}
