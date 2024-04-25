@@ -23,4 +23,25 @@ const RepoSchema = new Schema<IRepo>(
   { timestamps: true }
 );
 
+// RepoSchema.index(
+//   {
+//     language: "text",
+//     framework: "text",
+//     packages: "text",
+//     description: "text",
+//     tags: "text",
+//   },
+//   {
+//     weights: {
+//       language: 5,
+//       framework: 5,
+//       packages: 4,
+//       description: 2,
+//       tags: 3,
+//     },
+//   }
+// );
+
+// mongoose.models = {};
+
 export const Repo = mongoose.models.Repo ?? model<IRepo>("Repo", RepoSchema);

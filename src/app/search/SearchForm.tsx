@@ -1,21 +1,23 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { searchRepo } from "./actions";
 
 const SearchForm = (): JSX.Element => {
   const [search, setSearch] = useState("");
 
   const router = useRouter();
-  const searchRepo = (e: any): void => {
+  const searchRepoWrapper = (e: any): void => {
     e.preventDefault();
-    router.push(`/search?q=${search}`);
+    // router.push(`/search?q=${search}`);
+    void searchRepo("TypeScript", "NextJS", ["axios", "nodemailer"], "acpce");
   };
 
   return (
     <>
       <form
         onSubmit={(e) => {
-          searchRepo(e);
+          searchRepoWrapper(e);
         }}
         className="w-full text-center"
       >
