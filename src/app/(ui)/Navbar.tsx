@@ -34,15 +34,38 @@ const Navbar = (): JSX.Element => {
             </p>
           </Link>
 
-          <Link href="/auth/login">
+          <Link href="/about">
             <p
               className={`text-lg  font-medium ${
-                pathname === "/add-repo" ? "text-primary" : "text-secondary"
+                pathname === "/about" ? "text-primary" : "text-secondary"
               } hover:text-primary`}
             >
-              Login
+              About
             </p>
           </Link>
+
+          {!localStorage.getItem("token") && (
+            <Link href="/auth/login">
+              <p
+                className={`text-lg  font-medium ${
+                  pathname === "/add-repo" ? "text-primary" : "text-secondary"
+                } hover:text-primary`}
+              >
+                Login
+              </p>
+            </Link>
+          )}
+          {localStorage.getItem("token") && (
+            <Link href="/my-repos">
+              <p
+                className={`text-lg  font-medium ${
+                  pathname === "/my-repos" ? "text-primary" : "text-secondary"
+                } hover:text-primary`}
+              >
+                My Repos
+              </p>
+            </Link>
+          )}
         </div>
       </nav>
     </>
