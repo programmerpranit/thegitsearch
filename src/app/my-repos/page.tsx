@@ -42,7 +42,7 @@ const page = () => {
   return (
     <div className="flex flex-col items-center">
       <h2 className="mb-2 text-center">My Repositories</h2>
-      <div className="flex w-[70%] flex-col items-start  justify-center gap-2">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-start  justify-center gap-2">
         {dummyRepoData.map((repo) => (
           <div
             key={repo.id}
@@ -53,9 +53,11 @@ const page = () => {
               <h5>{repo.language}</h5>
               <p>{repo.description}</p>
               <div className="flex">
-                <h5 className="mr-2" >Topics :</h5>
+                <h5 className="mr-2">Topics :</h5>
                 {repo.topics.map((topic) => (
-                  <h5 className="mr-2">{topic}</h5>
+                  <h5 className="mr-2" key={topic}>
+                    {topic}
+                  </h5>
                 ))}
               </div>
             </div>

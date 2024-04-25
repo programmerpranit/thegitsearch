@@ -6,11 +6,13 @@ import React, { useEffect, useState } from "react";
 
 const Navbar = (): JSX.Element => {
   const [pathname, setPathname] = useState("/");
-
+  const [token, setToken] = useState<string | null>(null);
   const path = usePathname();
 
   useEffect(() => {
     setPathname(path);
+    const t = localStorage.getItem("token");
+    setToken(t);
   }, [path]);
 
   if (path.startsWith("/admin")) return <></>;
@@ -44,7 +46,7 @@ const Navbar = (): JSX.Element => {
             </p>
           </Link>
 
-          {!localStorage.getItem("token") && (
+          {token === null && (
             <Link href="/auth/login">
               <p
                 className={`text-lg  font-medium ${
@@ -55,7 +57,7 @@ const Navbar = (): JSX.Element => {
               </p>
             </Link>
           )}
-          {localStorage.getItem("token") && (
+          {token !== null && (
             <Link href="/my-repos">
               <p
                 className={`text-lg  font-medium ${

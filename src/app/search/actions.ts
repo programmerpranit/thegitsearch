@@ -26,7 +26,7 @@ export const searchRepo = async (
       query.$text = { $search: text };
     }
 
-    const results = await Repo.find(query);
+    const results = await Repo.find({});
     console.log(results);
   } catch (error) {
     console.log(error);

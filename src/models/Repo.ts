@@ -1,5 +1,5 @@
-import mongoose, { Schema, model, type ObjectId } from "mongoose";
-
+import { Schema, model, type ObjectId } from "mongoose";
+import mongoose from "mongoose";
 export interface IRepo {
   name: string;
   language: string;
@@ -23,25 +23,6 @@ const RepoSchema = new Schema<IRepo>(
   { timestamps: true }
 );
 
-// RepoSchema.index(
-//   {
-//     language: "text",
-//     framework: "text",
-//     packages: "text",
-//     description: "text",
-//     tags: "text",
-//   },
-//   {
-//     weights: {
-//       language: 5,
-//       framework: 5,
-//       packages: 4,
-//       description: 2,
-//       tags: 3,
-//     },
-//   }
-// );
-
-// mongoose.models = {};
+mongoose.models = {};
 
 export const Repo = mongoose.models.Repo ?? model<IRepo>("Repo", RepoSchema);
