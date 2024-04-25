@@ -70,6 +70,17 @@ const Navbar = (): JSX.Element => {
               </p>
             </Link>
           )}
+          {token !== null && (
+            <Link href="/profile">
+              <p
+                className={`text-lg  font-medium ${
+                  pathname === "/profile" ? "text-primary" : "text-secondary"
+                } hover:text-primary`}
+              >
+                Profile
+              </p>
+            </Link>
+          )}
         </div>
       </nav>
     </>

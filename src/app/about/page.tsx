@@ -1,6 +1,6 @@
 import React from "react";
 
-function page() {
+function page():JSX.Element {
   return (
     <>
       <h2 className="text-center">What is Git Search?</h2>

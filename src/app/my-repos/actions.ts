@@ -1,3 +1,4 @@
+"use server"
 import connectToDB from "@/middleware/connectToDB";
 import { verifyUser } from "@/middleware/verifyToken";
 import { Repo } from "@/models/Repo";

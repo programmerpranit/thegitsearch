@@ -7,17 +7,17 @@ const SearchForm = (): JSX.Element => {
   const [search, setSearch] = useState("");
 
   const router = useRouter();
-  const searchRepoWrapper = (e: any): void => {
+  const searchRepoWrapper = async (e: any): Promise<void> => {
     e.preventDefault();
-    // router.push(`/search?q=${search}`);
-    void searchRepo("TypeScript", "NextJS", ["axios", "nodemailer"]);
+    const res =  await searchRepo("TypeScript", "NextJS", ["axios", "nodemailer"]);
+    console.log(res)
   };
 
   return (
     <>
       <form
         onSubmit={(e) => {
-          searchRepoWrapper(e);
+          void searchRepoWrapper(e);
         }}
         className="w-full text-center"
       >
