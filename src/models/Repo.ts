@@ -23,6 +23,6 @@ const RepoSchema = new Schema<IRepo>(
   { timestamps: true }
 );
 
-mongoose.models = {};
+// mongoose.models = {};
 
 export const Repo = mongoose.models.Repo ?? model<IRepo>("Repo", RepoSchema);

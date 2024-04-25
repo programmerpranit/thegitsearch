@@ -1,3 +1,5 @@
+"use server";
+
 import { Repo } from "@/models/Repo";
 import type { RepoType } from "@/types/mongo";
 import type { FilterQuery } from "mongoose";
@@ -34,7 +36,8 @@ export const searchRepo = async (
     //   query.$text = { $search: text };
     // }
 
-    const results = await Repo.find(query);
+    const results = await Repo.find({ language: "TypeScript" });
+
     console.log(results);
     return JSON.parse(JSON.stringify(results));
   } catch (error) {

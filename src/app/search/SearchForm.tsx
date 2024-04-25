@@ -10,7 +10,7 @@ const SearchForm = (): JSX.Element => {
   const searchRepoWrapper = (e: any): void => {
     e.preventDefault();
     // router.push(`/search?q=${search}`);
-    void searchRepo("TypeScript", "NextJS", ["axios", "nodemailer"], "acpce");
+    void searchRepo("TypeScript", "NextJS", ["axios", "nodemailer"]);
   };
 
   return (
