@@ -4,23 +4,11 @@ import { getRepoDetails, searchRepo } from "./actions";
 import Repository from "../my-repos/components/Repository";
 import SearchForm from "./SearchForm";
 import { useRouter } from "next/navigation";
+import type { RepoType } from "@/types/mongo";
 interface SearchData {
   language: string;
   framework: string;
   package: [];
-}
-interface Repo {
-  _id: string;
-  name: string;
-  language: string;
-  framework: string;
-  description: string;
-  tags: string[];
-  packages: string[];
-  addedBy: string;
-  createdAt: string; // ISO 8601 date string
-  updatedAt: string; // ISO 8601 date string
-  __v: number;
 }
 
 const Search = (): JSX.Element => {
@@ -31,14 +19,17 @@ const Search = (): JSX.Element => {
   });
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<Repo[]>([]);
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const [searchResults, setSearchResults] = useState<RepoType[]>([]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     console.log(formData);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
     setLoading(true);
     try {
@@ -47,14 +38,16 @@ const Search = (): JSX.Element => {
         formData.framework,
         formData.package
       );
+      console.log(res);
       setSearchResults(res);
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
   return (
-    <div>
+    <div className="mx-auto max-w-7xl">
       {/* <h2 className="mt-10 text-center">
         An AI Based Advance <span className="text-primary">GitSearch</span>
       </h2> */}
@@ -63,7 +56,12 @@ const Search = (): JSX.Element => {
       <SearchForm /> {/* Assuming SearchForm renders relevant UI elements */}
       <p className="mt-5 text-center">OR</p>
       <h3 className="mb-5 text-center">Use Advance Filters</h3>
-      <form className="px-10" onSubmit={handleSubmit}>
+      <form
+        className="px-10"
+        onSubmit={(e) => {
+          void handleSubmit(e);
+        }}
+      >
         <div className="flex">
           <div className="w-1/3 pr-2">
             <p className="font-semibold">Language</p>
@@ -86,8 +84,7 @@ const Search = (): JSX.Element => {
               className="inp w-full"
             >
               <option value="React">React</option>
-              <option value="Next JS pages">Next JS pages</option>
-              <option value="Next JS app">Next JS app</option>
+              <option value="NextJS">Next JS</option>
               <option value="Node Js">Node Js</option>
               <option value="Express">Express</option>
               <option value="Vue">Vue</option>

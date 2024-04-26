@@ -1,5 +1,6 @@
 "use server";
 
+import connectToDB from "@/middleware/connectToDB";
 import { Repo } from "@/models/Repo";
 import type { RepoType } from "@/types/mongo";
 import type { FilterQuery } from "mongoose";
@@ -19,7 +20,7 @@ export const searchRepo = async (
 ): Promise<RepoType[]> => {
   try {
     const query: FilterQuery<any> = {};
-
+    await connectToDB();
     if (language !== "") {
       query.language = language;
     }
@@ -36,7 +37,7 @@ export const searchRepo = async (
     //   query.$text = { $search: text };
     // }
 
-    const results = await Repo.find({ language: "TypeScript" });
+    const results = await Repo.find(query);
 
     console.log(results);
     return JSON.parse(JSON.stringify(results));
@@ -54,6 +55,7 @@ export const searchRepo = async (
 export const getLatestRepos = async (
   count: number = 10
 ): Promise<RepoType[]> => {
+  await connectToDB();
   const repos = await Repo.find().limit(count);
   return JSON.parse(JSON.stringify(repos));
 };
@@ -66,6 +68,7 @@ export const getLatestRepos = async (
 export const getRepoDetails = async (
   repoId: string
 ): Promise<RepoType | null> => {
+  await connectToDB();
   const repo: RepoType | null = await Repo.findById(repoId);
   return JSON.parse(JSON.stringify(repo));
 };

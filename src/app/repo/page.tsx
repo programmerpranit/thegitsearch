@@ -2,22 +2,10 @@
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { getRepoDetails } from "../search/actions";
-import Repository from "../my-repos/components/Repository";
-interface Repo {
-  _id: string;
-  name: string;
-  language: string;
-  framework: string;
-  description: string;
-  tags: string[];
-  packages: string[];
-  addedBy: string;
-  createdAt: string; // ISO 8601 date string
-  updatedAt: string; // ISO 8601 date string
-  __v: number;
-}
+import type { RepoType } from "@/types/mongo";
+
 function Page(): JSX.Element {
-  const [repoData, setRepoData] = useState<Repo>();
+  const [repoData, setRepoData] = useState<RepoType>();
   const searchParams = useSearchParams();
 
   const repoId: string | null = searchParams.get("id");
@@ -39,8 +27,8 @@ function Page(): JSX.Element {
   }, [repoId]);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex w-[75%] items-center justify-between self-center">
+    <div className="mx-auto flex max-w-7xl items-center justify-center">
+      <div className="flex items-center justify-between self-center">
         {/* <Repository repo={repoData} /> */}
         <div>
           <h4>

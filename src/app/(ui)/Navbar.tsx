@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 const Navbar = (): JSX.Element => {
   const [pathname, setPathname] = useState("/");
@@ -11,8 +12,10 @@ const Navbar = (): JSX.Element => {
 
   useEffect(() => {
     setPathname(path);
-    const t = localStorage.getItem("token");
-    setToken(t);
+    const t = Cookies.get("authorization");
+    if (t !== undefined) {
+      setToken(t);
+    }
     // getMyProfile();
   }, [path]);
 
