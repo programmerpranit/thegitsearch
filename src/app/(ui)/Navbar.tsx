@@ -1,6 +1,5 @@
 "use client";
 
-import { getMyProfile } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -38,16 +37,6 @@ const Navbar = (): JSX.Element => {
             </p>
           </Link>
 
-          <Link href="/about">
-            <p
-              className={`text-lg  font-medium ${
-                pathname === "/about" ? "text-primary" : "text-secondary"
-              } hover:text-primary`}
-            >
-              About
-            </p>
-          </Link>
-
           {token === null && (
             <Link href="/auth/login">
               <p
@@ -81,6 +70,15 @@ const Navbar = (): JSX.Element => {
               </p>
             </Link>
           )}
+          <Link href="/about">
+            <p
+              className={`text-lg  font-medium ${
+                pathname === "/about" ? "text-primary" : "text-secondary"
+              } hover:text-primary`}
+            >
+              About
+            </p>
+          </Link>
         </div>
       </nav>
     </>
