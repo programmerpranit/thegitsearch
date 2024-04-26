@@ -63,13 +63,13 @@ const Navbar = (): JSX.Element => {
             </Link>
           )}
           {token !== null && (
-            <Link href="/profile">
+            <Link href="/add-repo">
               <p
                 className={`text-lg  font-medium ${
-                  pathname === "/profile" ? "text-primary" : "text-secondary"
+                  pathname === "/add-repo" ? "text-primary" : "text-secondary"
                 } hover:text-primary`}
               >
-                Profile
+                Add Repo
               </p>
             </Link>
           )}

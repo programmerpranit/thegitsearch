@@ -72,3 +72,10 @@ export const getRepoDetails = async (
   const repo: RepoType | null = await Repo.findById(repoId);
   return JSON.parse(JSON.stringify(repo));
 };
+
+export const getAllPackages = async (): Promise<string[]> => {
+  await connectToDB();
+  const distinctPackages = await Repo.distinct("packages");
+  console.log(distinctPackages);
+  return JSON.parse(JSON.stringify(distinctPackages));
+};

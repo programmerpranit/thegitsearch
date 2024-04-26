@@ -87,13 +87,7 @@ const AddRepoPage = ({ userRepos }: { userRepos: Repo[] }): JSX.Element => {
             >
               {userRepos.map((repo) => (
                 <div
-                  // onClick={() => {
-                  //   toast("Clicked");
-                  //   checkAndSetRepo(repo);
-                  //   setSuggestions(false);
-                  // }}
                   onMouseDown={() => {
-                    toast("Clicked");
                     checkAndSetRepo(repo);
                     setSuggestions(false);
                   }}
@@ -112,7 +106,9 @@ const AddRepoPage = ({ userRepos }: { userRepos: Repo[] }): JSX.Element => {
             </div>
           )}
         </form>
-        {repoDetails !== null && <RepoDetails details={repoDetails} />}
+        {repoDetails !== null && (
+          <RepoDetails details={repoDetails} setRepoDetails={setRepoDetails} />
+        )}
       </div>
     </>
   );

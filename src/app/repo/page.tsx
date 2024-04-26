@@ -22,7 +22,7 @@ function Page(): JSX.Element {
 
   useEffect(() => {
     if (repoId != null) {
-      getRepo();
+      void getRepo();
     }
   }, [repoId]);
 

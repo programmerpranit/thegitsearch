@@ -1,44 +1,38 @@
-import { Github, Link } from "lucide-react";
+"use client";
+
+import type { RepoType } from "@/types/mongo";
+import { Github } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
-interface Repo {
-  _id: string;
-  name: string;
-  language: string;
-  framework: string;
-  description: string;
-  tags: string[];
-  packages: string[];
-  addedBy: string;
-  createdAt: string; // ISO 8601 date string
-  updatedAt: string; // ISO 8601 date string
-  __v: number;
-}
-function Repository({ repo }: { repo: Repo }): JSX.Element {
+
+function Repository({ repo }: { repo: RepoType }): JSX.Element {
+  const router = useRouter();
+
   return (
-    <div
-      key={repo?._id}
-      className=" flex w-full items-center  justify-between  rounded-md bg-gray-100 p-4"
-    >
-      <div>
+    <div className=" mt-3 flex w-full max-w-7xl items-center justify-between rounded-md border p-4">
+      <div
+        onClick={() => {
+          router.push(`/repo/${repo._id}`);
+        }}
+        className="cursor-pointer"
+      >
         <h4>{repo?.name}</h4>
-        <h5>{repo?.language}</h5>
-        <p>{repo?.description}</p>
-        <div className="flex">
-          <h5 className="mr-2">Topics :</h5>
-          {repo?.tags?.map((topic) => (
-            <h5 className="mr-2" key={topic}>
-              {topic}
+        <h5 className="w-fit rounded-full bg-green-100 px-3">
+          {repo?.language}
+        </h5>
+        {/* <p>{repo?.description}</p> */}
+        <div className="flex flex-wrap">
+          {repo?.packages?.map((p) => (
+            <h5 className="mr-2" key={p}>
+              {p}
             </h5>
           ))}
         </div>
       </div>
 
       <div className="flex gap-4 self-start">
-        <a href={''}>
+        <a href={`https://github.com/${repo.name}`}>
           <Github />
-        </a>
-        <a href={''}>
-          <Link />
         </a>
       </div>
     </div>

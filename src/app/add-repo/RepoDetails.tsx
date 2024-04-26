@@ -2,12 +2,23 @@ import Input from "@/components/Input";
 import type { Repo } from "@/types/github";
 import type { PackageJSON } from "@/types/node";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { toast } from "react-toastify";
-import { addRepo } from "./actions";
-import { useRouter } from 'next/navigation'
+import { addRepo, detectFramework } from "./actions";
+import { useRouter } from "next/navigation";
 
-const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
+const RepoDetails = ({
+  details,
+  setRepoDetails,
+}: {
+  details: Repo | null;
+  setRepoDetails: Dispatch<SetStateAction<Repo | null>>;
+}): JSX.Element => {
   const [dependencies, setDependencies] = useState<string[]>([]);
   const [description, setDescription] = useState<string>(
     details?.description ?? ""
@@ -15,7 +26,10 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   const [topics, setTopics] = useState<string[]>(details?.topics ?? []);
   const [topic, setTopic] = useState<string>("");
   const [framework, setFramework] = useState("Unknown");
-  const router = useRouter()
+
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const getUserNameRepo = (url: string): { user: string; repo: string } => {
     const splitted = url.split("/");
@@ -31,6 +45,10 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
       const packageJSON = res.data as PackageJSON;
       const dep = Object.keys(packageJSON.dependencies);
       setDependencies(dep);
+      setLoading(true);
+      const f = await detectFramework(dep);
+      setFramework(f);
+      setLoading(false);
       // }
     } catch (error) {
       console.log(error);
@@ -49,7 +67,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
     if (repo === null) {
       toast.error("Failed to add the repo");
     } else {
-      router.push('/')
+      setRepoDetails(null);
       toast.success("Repo Added Successfully");
     }
   };
@@ -62,7 +80,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
   return (
     <div className="my-10 w-full rounded-xl border-2 p-5">
       <h3>Repo Details</h3>
-
+      <span className="text-xs">{framework}</span>
       <Input
         label="Repo Name"
         value={details?.name}
@@ -81,7 +99,14 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
       />
 
       <div className={` my-3 flex flex-col`}>
-        <label className="font-medium">Detected Framework</label>
+        <div className="flex items-center gap-3">
+          <label className="font-medium">Framework</label>
+          {loading && (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-t-primary">
+              {" "}
+            </span>
+          )}
+        </div>
         <select
           value={framework}
           onChange={(e) => {
@@ -91,7 +116,7 @@ const RepoDetails = ({ details }: { details: Repo | null }): JSX.Element => {
         >
           <option value="Unknown">Unknown</option>
           <option value="React">React</option>
-          <option value="NextJS">NextJS</option>
+          <option value="Nextjs">NextJS</option>
         </select>
       </div>
 
